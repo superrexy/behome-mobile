@@ -33,7 +33,20 @@ class HomeView extends GetView<HomeController> {
                       Positioned(
                         right: 10,
                         child: GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            Get.defaultDialog(
+                              title: "Keluar",
+                              middleText: "Apakah anda yakin ingin keluar ?",
+                              textConfirm: "Ya",
+                              textCancel: "Tidak",
+                              confirmTextColor: Colors.white,
+                              cancelTextColor: Colors.black,
+                              buttonColor: AppColors.primaryColor,
+                              onConfirm: () {
+                                Get.offAllNamed(Routes.LOGIN);
+                              },
+                            );
+                          },
                           child: SvgPicture.asset(AppImages.icExit),
                         ),
                       ),
@@ -91,17 +104,20 @@ class HomeView extends GetView<HomeController> {
                             children: [
                               TextButton(
                                 onPressed: () => Get.toNamed(Routes.PROFILE),
+                                style: TextButton.styleFrom(
+                                  padding: EdgeInsets.zero,
+                                ),
                                 child: Text(
                                   "Ubah Profil",
                                   style:
                                       TextStyle(color: AppColors.primaryColor),
                                 ),
                               ),
-                              Text(
+                              const Text(
                                 "Selamat Datang !!",
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
-                              Text("Muhamad Syarifudin")
+                              const Text("Muhamad Syarifudin")
                             ],
                           ),
                         ],
@@ -149,9 +165,9 @@ class HomeView extends GetView<HomeController> {
                               ),
                             ),
                             GestureDetector(
-                                onTap: () => Get.toNamed(Routes.NEWS),
-                                child:
-                                    SvgPicture.asset(AppImages.icArrowUpDown))
+                              onTap: () {},
+                              child: SvgPicture.asset(AppImages.icArrowUpDown),
+                            )
                           ],
                         ),
                         const SizedBox(height: 5),
@@ -179,6 +195,7 @@ class HomeView extends GetView<HomeController> {
                         child: ListView(
                           children: [
                             Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Container(
                                   width: Get.width * 0.27,
@@ -198,6 +215,7 @@ class HomeView extends GetView<HomeController> {
                             ),
                             const SizedBox(height: 10),
                             Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Container(
                                   width: Get.width * 0.27,
@@ -217,7 +235,12 @@ class HomeView extends GetView<HomeController> {
                             ),
                             const SizedBox(height: 10),
                             Center(
-                              child: SvgPicture.asset(AppImages.icAdd),
+                              child: GestureDetector(
+                                onTap: () => Get.toNamed(Routes.NEWS),
+                                child: SvgPicture.asset(
+                                  AppImages.icAdd,
+                                ),
+                              ),
                             )
                           ],
                         ),
