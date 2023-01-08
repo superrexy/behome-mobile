@@ -78,7 +78,7 @@ class RegisterView extends GetView<RegisterController> {
                     child: FormButton(
                       label: 'Mendaftar',
                       buttonBackgroundColor: AppColors.secondaryColor,
-                      onPressed: () => Get.toNamed(Routes.HOME),
+                      onPressed: () => Get.toNamed(Routes.REGISTER_SUCCESS),
                     ),
                   ),
                 ],
