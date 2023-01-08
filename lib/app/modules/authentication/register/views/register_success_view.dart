@@ -40,7 +40,7 @@ class RegisterSuccessView extends GetView<RegisterController> {
                 ),
                 SizedBox(height: Get.height * 0.015),
                 GestureDetector(
-                  onTap: () => Get.toNamed(Routes.HOME),
+                  onTap: () => Get.offAllNamed(Routes.LOGIN),
                   child: Container(
                     height: Get.height * 0.07,
                     width: Get.width * 0.25,
