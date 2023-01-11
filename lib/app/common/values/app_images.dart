@@ -20,5 +20,6 @@ abstract class AppImages {
   static const String imgLogoWithCircle =
       'assets/images/img_logo_with_circle.png';
   static const String imgCircle2 = 'assets/images/img_circle.png';
+  static const String imgDana = 'assets/images/img_dana.png';
   static const String imgSuccess = 'assets/images/img_success.png';
 }
