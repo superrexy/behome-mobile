@@ -1,3 +1,4 @@
+import 'package:behome_mobile/app/modules/news/views/news_detail_view.dart';
 import 'package:behome_mobile/app/modules/order/views/order_success_view.dart';
 import 'package:get/get.dart';
 
@@ -76,6 +77,11 @@ class AppPages {
     GetPage(
       name: _Paths.NEWS,
       page: () => const NewsView(),
+      binding: NewsBinding(),
+    ),
+    GetPage(
+      name: _Paths.NEWS_DETAIL,
+      page: () => const NewsDetailView(),
       binding: NewsBinding(),
     ),
     GetPage(

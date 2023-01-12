@@ -82,7 +82,7 @@ class NewsProvider {
 
       final formData = FormData.fromMap({
         'description': request.description,
-        'car_image': MultipartFile.fromBytes(
+        'news_image': MultipartFile.fromBytes(
           request.newsImage!.readAsBytesSync(),
           filename: fileName,
           contentType: MediaType('image', extFile),

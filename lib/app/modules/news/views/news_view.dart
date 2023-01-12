@@ -131,6 +131,9 @@ class NewsView extends GetView<NewsController> {
                                           resetImage: () =>
                                               controller.resetImage(),
                                           valueImage: controller.image,
+                                          fromInternet: controller
+                                              .isImageFromInternet.value,
+                                          imageUrl: controller.imageUrl,
                                         );
                                       },
                                     ),

@@ -16,6 +16,7 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           Container(
@@ -215,6 +216,10 @@ class HomeView extends GetView<HomeController> {
                                 children: controller.news.map(
                                   (element) {
                                     return CardNewsItem(
+                                      onTap: () => Get.toNamed(
+                                        Routes.NEWS_DETAIL,
+                                        arguments: element,
+                                      ),
                                       data: element,
                                     );
                                   },
@@ -255,39 +260,44 @@ class CardNewsItem extends StatelessWidget {
   const CardNewsItem({
     Key? key,
     required this.data,
+    this.onTap,
   }) : super(key: key);
 
   final NewsDataResponse data;
+  final Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 10),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: Get.width * 0.27,
-            height: 60,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: NetworkImage(AppConstants.baseURL + data.newsImage),
-                fit: BoxFit.cover,
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 10),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: Get.width * 0.27,
+              height: 60,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage(AppConstants.baseURL + data.newsImage),
+                  fit: BoxFit.cover,
+                ),
+                borderRadius: BorderRadius.circular(8),
               ),
-              borderRadius: BorderRadius.circular(8),
             ),
-          ),
-          const SizedBox(width: 8),
-          SizedBox(
-            width: Get.width * 0.5,
-            child: Text(
-              data.description,
-              maxLines: 3,
-              textAlign: TextAlign.justify,
-              overflow: TextOverflow.ellipsis,
-            ),
-          )
-        ],
+            const SizedBox(width: 8),
+            SizedBox(
+              width: Get.width * 0.5,
+              child: Text(
+                data.description,
+                maxLines: 3,
+                textAlign: TextAlign.justify,
+                overflow: TextOverflow.ellipsis,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
