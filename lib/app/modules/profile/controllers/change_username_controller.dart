@@ -30,6 +30,7 @@ class ChangeUsernameController extends GetxController {
         await picker.pickImage(source: ImageSource.gallery, imageQuality: 30);
 
     if (pickedFile != null) {
+      isImageFromInternet.value = false;
       image = File(pickedFile.path);
       update();
     } else {
@@ -83,6 +84,8 @@ class ChangeUsernameController extends GetxController {
     }
 
     usernameController.text = homeController.user.value.name;
+
+    update();
   }
 
   @override
