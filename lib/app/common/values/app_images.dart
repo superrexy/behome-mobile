@@ -21,4 +21,5 @@ abstract class AppImages {
       'assets/images/img_logo_with_circle.png';
   static const String imgCircle2 = 'assets/images/img_circle.png';
   static const String imgSuccess = 'assets/images/img_success.png';
+  static const String imgUser = 'assets/images/user_image.png';
 }

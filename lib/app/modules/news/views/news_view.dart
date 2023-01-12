@@ -1,6 +1,7 @@
 import 'package:behome_mobile/app/common/values/app_colors.dart';
 import 'package:behome_mobile/app/common/values/app_images.dart';
 import 'package:behome_mobile/app/routes/app_pages.dart';
+import 'package:behome_mobile/app/widgets/form_input_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -13,6 +14,7 @@ class NewsView extends GetView<NewsController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           Container(
@@ -83,79 +85,82 @@ class NewsView extends GetView<NewsController> {
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            SizedBox(
-                              height: Get.height * 0.3,
-                              width: Get.width * 0.4,
-                              child: TextFormField(
-                                maxLines: 10,
-                                keyboardType: TextInputType.text,
-                                textCapitalization:
-                                    TextCapitalization.sentences,
-                                decoration: InputDecoration(
-                                  hintText: 'Tulis Kabar Berita...',
-                                  fillColor: AppColors.tertiaryColor.shade600,
-                                  filled: true,
-                                  border: const OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(10.0),
+                        child: Form(
+                          key: controller.formKey,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: TextFormField(
+                                  controller: controller.descriptionController,
+                                  maxLines: 10,
+                                  keyboardType: TextInputType.text,
+                                  textCapitalization:
+                                      TextCapitalization.sentences,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Kabar Berita tidak boleh kosong';
+                                    }
+                                    return null;
+                                  },
+                                  decoration: InputDecoration(
+                                    hintText: 'Tulis Kabar Berita...',
+                                    fillColor: AppColors.tertiaryColor.shade600,
+                                    filled: true,
+                                    border: const OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(10.0),
+                                      ),
+                                      borderSide: BorderSide.none,
                                     ),
-                                    borderSide: BorderSide.none,
                                   ),
                                 ),
                               ),
-                            ),
-                            SizedBox(
-                              height: Get.height * 0.3,
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Container(
-                                    height: Get.height * 0.2,
-                                    width: Get.width * 0.4,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: AppColors.tertiaryColor.shade700,
+                              Expanded(
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    GetBuilder<NewsController>(
+                                      init: NewsController(),
+                                      initState: (_) {},
+                                      builder: (_) {
+                                        return FormInputImage(
+                                          changeImage: () =>
+                                              controller.getImage(),
+                                          resetImage: () =>
+                                              controller.resetImage(),
+                                          valueImage: controller.image,
+                                        );
+                                      },
                                     ),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        SvgPicture.asset(AppImages.icAdd2),
-                                        const SizedBox(height: 10),
-                                        Text(
-                                          'Tambahkan Gambar',
-                                          style: TextStyle(
-                                            fontSize: 10,
-                                            color: AppColors.tertiaryColor,
+                                    GestureDetector(
+                                      onTap: () => controller.onSubmit(),
+                                      child: Container(
+                                        height: 50,
+                                        width: Get.width * 0.4,
+                                        margin: const EdgeInsets.only(top: 10),
+                                        decoration: BoxDecoration(
+                                          color: AppColors.secondaryColor,
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        child: const Center(
+                                          child: Text(
+                                            'Upload Berita',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                           ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                    height: 50,
-                                    width: Get.width * 0.4,
-                                    decoration: BoxDecoration(
-                                      color: AppColors.secondaryColor,
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: const Center(
-                                      child: Text(
-                                        'Upload Berita',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            )
-                          ],
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),

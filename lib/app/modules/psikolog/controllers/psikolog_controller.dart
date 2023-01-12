@@ -1,9 +1,21 @@
+import 'package:behome_mobile/app/data/psikologs_provider.dart';
+import 'package:behome_mobile/app/model/response/psikologs_response.dart';
 import 'package:get/get.dart';
 
 class PsikologController extends GetxController {
-  //TODO: Implement PsikologController
+  // PROVIDER
+  final PsikologsProvider usersProvider = PsikologsProvider();
 
-  final count = 0.obs;
+  // OBSERVABLE
+  final psikolog = PsikologsDataResponse(
+    id: 0,
+    name: '',
+    psikologImage: '',
+    skill: '',
+    userId: 0,
+    virtualAccountPayment: '',
+  ).obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -18,6 +30,4 @@ class PsikologController extends GetxController {
   void onClose() {
     super.onClose();
   }
-
-  void increment() => count.value++;
 }
