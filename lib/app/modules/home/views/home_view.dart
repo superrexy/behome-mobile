@@ -1,4 +1,7 @@
+import 'package:behome_mobile/app/common/storage/storage.dart';
 import 'package:behome_mobile/app/common/values/app_colors.dart';
+import 'package:behome_mobile/app/common/values/app_constants.dart';
+import 'package:behome_mobile/app/model/response/news_response.dart';
 import 'package:behome_mobile/app/routes/app_pages.dart';
 import 'package:behome_mobile/app/common/values/app_images.dart';
 import 'package:flutter/material.dart';
@@ -43,7 +46,11 @@ class HomeView extends GetView<HomeController> {
                               cancelTextColor: Colors.black,
                               buttonColor: AppColors.primaryColor,
                               onConfirm: () {
-                                Get.offAllNamed(Routes.LOGIN);
+                                Get.offAllNamed(
+                                  Routes.LOGIN,
+                                );
+
+                                Storage.removeValue(AppConstants.token);
                               },
                             );
                           },
@@ -85,11 +92,17 @@ class HomeView extends GetView<HomeController> {
                                 image: AssetImage(AppImages.imgCircle2),
                               ),
                             ),
-                            child: const CircleAvatar(
-                              radius: 30.0,
-                              backgroundColor: Colors.transparent,
-                              backgroundImage:
-                                  NetworkImage("https://i.pravatar.cc/300"),
+                            child: Obx(
+                              () => CircleAvatar(
+                                radius: 30.0,
+                                backgroundColor: Colors.transparent,
+                                backgroundImage:
+                                    controller.user.value.userImage != null
+                                        ? NetworkImage(AppConstants.baseURL +
+                                            controller.user.value.userImage!)
+                                        : const AssetImage(AppImages.imgUser)
+                                            as ImageProvider,
+                              ),
                             ),
                           ),
                           const VerticalDivider(
@@ -117,7 +130,7 @@ class HomeView extends GetView<HomeController> {
                                 "Selamat Datang !!",
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
-                              const Text("Muhamad Syarifudin")
+                              Obx(() => Text(controller.user.value.name)),
                             ],
                           ),
                         ],
@@ -165,7 +178,11 @@ class HomeView extends GetView<HomeController> {
                               ),
                             ),
                             GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                controller.orderByDate(controller.isSort.value);
+                                controller.isSort.value =
+                                    !controller.isSort.value;
+                              },
                               child: SvgPicture.asset(AppImages.icArrowUpDown),
                             )
                           ],
@@ -190,58 +207,34 @@ class HomeView extends GetView<HomeController> {
                         borderRadius: BorderRadius.circular(16),
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 30),
+                        padding: const EdgeInsets.all(15),
                         child: ListView(
                           children: [
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  width: Get.width * 0.27,
-                                  height: 60,
-                                  color: AppColors.tertiaryColor,
-                                ),
-                                const SizedBox(width: 8),
-                                SizedBox(
-                                  width: Get.width * 0.5,
-                                  child: const Text(
-                                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur at sem ac ipsum scelerisque volutpat. ',
-                                    maxLines: 3,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                )
-                              ],
+                            Obx(
+                              () => Column(
+                                children: controller.news.map(
+                                  (element) {
+                                    return CardNewsItem(
+                                      data: element,
+                                    );
+                                  },
+                                ).toList(),
+                              ),
                             ),
-                            const SizedBox(height: 10),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  width: Get.width * 0.27,
-                                  height: 60,
-                                  color: AppColors.tertiaryColor,
-                                ),
-                                const SizedBox(width: 8),
-                                SizedBox(
-                                  width: Get.width * 0.5,
-                                  child: const Text(
-                                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur at sem ac ipsum scelerisque volutpat. ',
-                                    maxLines: 3,
-                                    overflow: TextOverflow.ellipsis,
+                            Obx(
+                              () => Visibility(
+                                visible: controller.user.value.role
+                                    .contains("psikolog"),
+                                child: Center(
+                                  child: GestureDetector(
+                                    onTap: () => Get.toNamed(Routes.NEWS),
+                                    child: SvgPicture.asset(
+                                      AppImages.icAdd,
+                                    ),
                                   ),
-                                )
-                              ],
-                            ),
-                            const SizedBox(height: 10),
-                            Center(
-                              child: GestureDetector(
-                                onTap: () => Get.toNamed(Routes.NEWS),
-                                child: SvgPicture.asset(
-                                  AppImages.icAdd,
                                 ),
                               ),
-                            )
+                            ),
                           ],
                         ),
                       ),
@@ -252,6 +245,48 @@ class HomeView extends GetView<HomeController> {
               ),
             ),
           ),
+        ],
+      ),
+    );
+  }
+}
+
+class CardNewsItem extends StatelessWidget {
+  const CardNewsItem({
+    Key? key,
+    required this.data,
+  }) : super(key: key);
+
+  final NewsDataResponse data;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 10),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: Get.width * 0.27,
+            height: 60,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: NetworkImage(AppConstants.baseURL + data.newsImage),
+                fit: BoxFit.cover,
+              ),
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
+          const SizedBox(width: 8),
+          SizedBox(
+            width: Get.width * 0.5,
+            child: Text(
+              data.description,
+              maxLines: 3,
+              textAlign: TextAlign.justify,
+              overflow: TextOverflow.ellipsis,
+            ),
+          )
         ],
       ),
     );

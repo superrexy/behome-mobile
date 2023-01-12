@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:get/get.dart';
+import 'package:flutter/services.dart';
 
+import '../../../common/values/app_constants.dart';
 import '../controllers/order_controller.dart';
 
 class OrderView extends GetView<OrderController> {
@@ -95,7 +97,7 @@ class OrderView extends GetView<OrderController> {
                           ),
                           const SizedBox(height: 10),
                           Text(
-                            "Muhamad Syarifudin",
+                            controller.homeController.user.value.name ?? "-",
                             style: TextStyle(
                               color: AppColors.secondaryColor,
                             ),
@@ -108,7 +110,7 @@ class OrderView extends GetView<OrderController> {
                           ),
                           const SizedBox(height: 5),
                           Text(
-                            "mhmd.srfx@gmail.com",
+                            controller.homeController.user.value.email ?? "-",
                             style: TextStyle(
                               color: AppColors.secondaryColor,
                             ),
@@ -128,8 +130,25 @@ class OrderView extends GetView<OrderController> {
                                 height: 80,
                                 width: 80,
                                 decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: AppColors.secondaryColor),
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                    image: controller
+                                                .psikologController
+                                                .psikologs[
+                                                    Get.arguments?['index']]
+                                                .psikologImage !=
+                                            null
+                                        ? NetworkImage(AppConstants.baseURL +
+                                            controller
+                                                .psikologController
+                                                .psikologs[
+                                                    Get.arguments?['index']]
+                                                .psikologImage!)
+                                        : const AssetImage(AppImages.imgUser)
+                                            as ImageProvider,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
                               ),
                               const SizedBox(width: 10),
                               Container(
@@ -142,20 +161,36 @@ class OrderView extends GetView<OrderController> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Isa Anugrah, S.Psi',
+                                    controller
+                                            .psikologController
+                                            .psikologs[Get.arguments?['index']]
+                                            .name ??
+                                        "-",
                                     style: TextStyle(
                                         color: AppColors.secondaryColor,
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16),
                                   ),
                                   Text(
-                                    'Inner Child, Toxic Family',
+                                    controller
+                                            .psikologController
+                                            .psikologs[Get.arguments?['index']]
+                                            .skill ??
+                                        "-",
                                     style: TextStyle(
                                       color: AppColors.secondaryColor,
                                     ),
                                   ),
                                   Text(
-                                    '16:20',
+                                    controller
+                                            .psikologController
+                                            .psikologs[Get.arguments?['index']]
+                                            .psikologSchedules!
+                                            .where((val) =>
+                                                val.userSelected == true)
+                                            .map((e) => e.time)
+                                            .join() ??
+                                        "-",
                                     style: TextStyle(
                                       color: AppColors.secondaryColor,
                                     ),
@@ -185,25 +220,48 @@ class OrderView extends GetView<OrderController> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Image.asset(AppImages.imgDana, height: 25),
-                                const Text(
-                                  '+62 878 4705 8066',
-                                  style: TextStyle(
+                                Text(
+                                  controller
+                                          .psikologController
+                                          .psikologs[Get.arguments?['index']]
+                                          .virtualAccountPayment ??
+                                      "-",
+                                  style: const TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 15, vertical: 5),
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey.shade400,
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                  child: const Center(
-                                    child: Text(
-                                      'salin',
-                                      style: TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w500),
+                                GestureDetector(
+                                  onTap: () async {
+                                    await Clipboard.setData(
+                                      ClipboardData(
+                                        text: controller
+                                            .psikologController
+                                            .psikologs[Get.arguments?['index']]
+                                            .virtualAccountPayment,
+                                      ),
+                                    ).then((value) {
+                                      Get.snackbar(
+                                        "Berhasil",
+                                        "Berhasil menyalin nomor rekening",
+                                        backgroundColor: Colors.green,
+                                        colorText: Colors.white,
+                                      );
+                                    });
+                                  },
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 15, vertical: 5),
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey.shade400,
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child: const Center(
+                                      child: Text(
+                                        'Salin',
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w500),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -234,7 +292,18 @@ class OrderView extends GetView<OrderController> {
                           const SizedBox(height: 20),
                           Center(
                             child: GestureDetector(
-                              onTap: () => Get.toNamed(Routes.ORDER_SUCCESS),
+                              onTap: () => Get.offAllNamed(Routes.ORDER_SUCCESS,
+                                  arguments: {
+                                    'index': Get.arguments?['index'],
+                                    'date': controller
+                                        .psikologController
+                                        .psikologs[Get.arguments?['index']]
+                                        .psikologSchedules
+                                        .where(
+                                            (val) => val.userSelected == true)
+                                        .map((e) => e.time)
+                                        .join(),
+                                  }),
                               child: Container(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 50, vertical: 10),

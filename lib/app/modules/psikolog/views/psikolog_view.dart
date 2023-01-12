@@ -74,23 +74,35 @@ class PsikologView extends GetView<PsikologController> {
                   ),
                   const SizedBox(height: 22),
                   SizedBox(
-                    height: Get.height * 0.65,
+                    height: !controller.homeController.user.value.role
+                            .contains("psikolog")
+                        ? Get.height * 0.65
+                        : Get.height * 0.25,
                     width: Get.width,
-                    child: ListView(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      scrollDirection: Axis.horizontal,
-                      children: const [
-                        PsikologCard(),
-                        SizedBox(width: 10),
-                        PsikologCard(),
-                        SizedBox(width: 10),
-                        PsikologCard(),
-                        SizedBox(width: 10),
-                        PsikologCard(),
-                      ],
+                    child: GetBuilder<PsikologController>(
+                      init: PsikologController(),
+                      initState: (_) {},
+                      builder: (_) {
+                        return ListView.builder(
+                          itemBuilder: (context, index) {
+                            final psikolog = controller.psikologs[index];
+                            return PsikologCard(
+                              index: index,
+                              data: psikolog,
+                              psikologSchedules: psikolog.psikologSchedules,
+                              onTap: (item) =>
+                                  controller.userSelectSchedule(item, index),
+                              isAdmin: controller.homeController.user.value.role
+                                  .contains("psikolog"),
+                            );
+                          },
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          scrollDirection: Axis.horizontal,
+                          itemCount: controller.psikologs.length,
+                        );
+                      },
                     ),
                   ),
-                  const SizedBox(height: 22),
                 ],
               ),
             ),

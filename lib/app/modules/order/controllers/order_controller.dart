@@ -1,9 +1,12 @@
+import 'package:behome_mobile/app/modules/home/controllers/home_controller.dart';
+import 'package:behome_mobile/app/modules/psikolog/controllers/psikolog_controller.dart';
 import 'package:get/get.dart';
 
 class OrderController extends GetxController {
-  //TODO: Implement OrderController
+  // CONTROLLER
+  final PsikologController psikologController = Get.find<PsikologController>();
+  final HomeController homeController = Get.find<HomeController>();
 
-  final count = 0.obs;
   @override
   void onInit() {
     super.onInit();
@@ -18,6 +21,4 @@ class OrderController extends GetxController {
   void onClose() {
     super.onClose();
   }
-
-  void increment() => count.value++;
 }

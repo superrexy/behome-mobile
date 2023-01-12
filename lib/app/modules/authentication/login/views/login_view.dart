@@ -15,6 +15,7 @@ class LoginView extends GetView<LoginController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           Container(
@@ -46,19 +47,25 @@ class LoginView extends GetView<LoginController> {
                     horizontal: Get.width * 0.15,
                   ),
                   child: Form(
+                    key: controller.formKey,
                     child: Column(
                       children: [
-                        const FormInputField(
-                          hintText: 'Username atau Nomer HP',
+                        FormInputField(
+                          hintText: 'Email',
+                          keyboardType: TextInputType.emailAddress,
                           textCapitalization: TextCapitalization.none,
                           textInputAction: TextInputAction.next,
+                          controller: controller.emailController,
+                          isRequired: true,
                         ),
-                        const FormInputField(
+                        FormInputField(
                           hintText: 'Password',
                           textCapitalization: TextCapitalization.none,
                           textInputAction: TextInputAction.done,
                           keyboardType: TextInputType.visiblePassword,
                           isPassword: true,
+                          controller: controller.passwordController,
+                          isRequired: true,
                         ),
                         const SizedBox(height: 16.0),
                         Row(
@@ -68,7 +75,7 @@ class LoginView extends GetView<LoginController> {
                               child: FormButton(
                                 label: 'Masuk',
                                 buttonBackgroundColor: AppColors.secondaryColor,
-                                onPressed: () => Get.toNamed(Routes.HOME),
+                                onPressed: () => controller.onSubmit(),
                               ),
                             ),
                             const SizedBox(width: 4.0),

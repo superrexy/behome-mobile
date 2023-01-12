@@ -1,4 +1,5 @@
 import 'package:behome_mobile/app/common/values/app_colors.dart';
+import 'package:behome_mobile/app/common/values/app_constants.dart';
 import 'package:behome_mobile/app/common/values/app_images.dart';
 import 'package:behome_mobile/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ class ProfileView extends GetView<ProfileController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           Container(
@@ -86,11 +88,25 @@ class ProfileView extends GetView<ProfileController> {
                         child: Column(
                           children: [
                             SizedBox(
-                              width: Get.width * 0.45,
-                              height: Get.height * 0.3,
-                              child: const CircleAvatar(
-                                backgroundImage:
-                                    NetworkImage("https://i.pravatar.cc/300"),
+                              width: Get.width * 0.4,
+                              height: Get.width * 0.4,
+                              child: Obx(
+                                () => Container(
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    image: DecorationImage(
+                                      image: controller.homeController.user
+                                                  .value.userImage !=
+                                              null
+                                          ? NetworkImage(AppConstants.baseURL +
+                                              controller.homeController.user
+                                                  .value.userImage!)
+                                          : const AssetImage(AppImages.imgUser)
+                                              as ImageProvider,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
                             const SizedBox(height: 20),
@@ -98,28 +114,33 @@ class ProfileView extends GetView<ProfileController> {
                               width: Get.width * 0.6,
                               height: Get.height * 0.075,
                               child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text(
-                                        "Muhamad Syarifudin",
-                                        style: TextStyle(
-                                            color: AppColors.secondaryColor,
-                                            fontWeight: FontWeight.bold),
+                                      Obx(
+                                        () => Text(
+                                          controller
+                                              .homeController.user.value.name,
+                                          style: TextStyle(
+                                              color: AppColors.secondaryColor,
+                                              fontWeight: FontWeight.bold),
+                                        ),
                                       ),
                                       GestureDetector(
-                                          onTap: () => Get.toNamed(
-                                              Routes.CHANGEUSERNAME),
-                                          child: SvgPicture.asset(
-                                              AppImages.icEdit))
+                                        onTap: () =>
+                                            Get.toNamed(Routes.CHANGEUSERNAME),
+                                        child: SvgPicture.asset(
+                                          AppImages.icEdit,
+                                        ),
+                                      )
                                     ],
                                   ),
                                   Container(
                                     height: 1,
+                                    margin: const EdgeInsets.symmetric(
+                                        vertical: 8.0),
                                     width: Get.width,
                                     color: AppColors.secondaryColor,
                                   ),
@@ -127,17 +148,16 @@ class ProfileView extends GetView<ProfileController> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text(
-                                        "mhmd.srfx@gmail.com",
-                                        style: TextStyle(
+                                      Obx(
+                                        () => Text(
+                                          controller
+                                              .homeController.user.value.email,
+                                          style: TextStyle(
                                             color: AppColors.secondaryColor,
-                                            fontWeight: FontWeight.bold),
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
                                       ),
-                                      GestureDetector(
-                                          onTap: () =>
-                                              Get.toNamed(Routes.CHANGEEMAIL),
-                                          child: SvgPicture.asset(
-                                              AppImages.icEdit))
                                     ],
                                   ),
                                 ],

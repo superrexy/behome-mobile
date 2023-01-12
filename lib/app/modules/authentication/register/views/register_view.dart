@@ -23,6 +23,7 @@ class RegisterView extends GetView<RegisterController> {
           ),
           child: Center(
             child: Form(
+              key: controller.formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -39,36 +40,42 @@ class RegisterView extends GetView<RegisterController> {
                   const SizedBox(
                     height: 24.0,
                   ),
-                  const FormInputField(
+                  FormInputField(
                     isLabelOnly: true,
-                    hintText: 'Username atau Nomer HP',
+                    hintText: 'Nama Lengkap',
                     textCapitalization: TextCapitalization.none,
                     textInputAction: TextInputAction.next,
+                    controller: controller.nameController,
                   ),
-                  const FormInputField(
+                  FormInputField(
                     isLabelOnly: true,
                     hintText: 'Email',
                     keyboardType: TextInputType.emailAddress,
                     textCapitalization: TextCapitalization.none,
                     textInputAction: TextInputAction.next,
+                    controller: controller.emailController,
                   ),
-                  const FormInputField(
+                  FormInputField(
                     isLabelOnly: true,
                     hintText: 'Alamat Lengkap',
                     textInputAction: TextInputAction.next,
+                    controller: controller.addressController,
                   ),
-                  const FormInputField(
+                  FormInputField(
                     isLabelOnly: true,
                     hintText: 'Nomer HP',
                     textInputAction: TextInputAction.next,
+                    keyboardType: TextInputType.phone,
+                    controller: controller.phoneController,
                   ),
-                  const FormInputField(
+                  FormInputField(
                     isLabelOnly: true,
                     hintText: 'Password',
                     textCapitalization: TextCapitalization.none,
                     textInputAction: TextInputAction.done,
                     keyboardType: TextInputType.visiblePassword,
                     isPassword: true,
+                    controller: controller.passwordController,
                   ),
                   const SizedBox(
                     height: 24.0,
@@ -78,7 +85,7 @@ class RegisterView extends GetView<RegisterController> {
                     child: FormButton(
                       label: 'Mendaftar',
                       buttonBackgroundColor: AppColors.secondaryColor,
-                      onPressed: () => Get.toNamed(Routes.REGISTER_SUCCESS),
+                      onPressed: () => controller.onSubmit(),
                     ),
                   ),
                 ],
