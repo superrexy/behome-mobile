@@ -1,18 +1,19 @@
 import 'package:behome_mobile/app/common/values/app_colors.dart';
 import 'package:behome_mobile/app/common/values/app_images.dart';
-import 'package:behome_mobile/app/routes/app_pages.dart';
+import 'package:behome_mobile/app/modules/psikolog/controllers/edit_psikolog_controller.dart';
+import 'package:behome_mobile/app/widgets/form_input_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
 import 'package:get/get.dart';
 
 import '../controllers/psikolog_controller.dart';
 
-class EditPsikolog extends GetView<PsikologController> {
+class EditPsikolog extends GetView<EditPsikologController> {
   const EditPsikolog({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           Container(
@@ -83,272 +84,228 @@ class EditPsikolog extends GetView<PsikologController> {
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            SizedBox(
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    height: Get.height * 0.06,
-                                    width: Get.width * 0.4,
-                                    child: TextFormField(
-                                      keyboardType: TextInputType.text,
-                                      textCapitalization:
-                                          TextCapitalization.sentences,
-                                      decoration: InputDecoration(
-                                        hintText: 'Nama Lengkap',
-                                        fillColor: AppColors.tertiaryColor,
-                                        filled: true,
-                                        border: const OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                            Radius.circular(10.0),
+                        child: Form(
+                          key: controller.formKey,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    SizedBox(
+                                      height: Get.height * 0.06,
+                                      width: Get.width * 0.4,
+                                      child: TextFormField(
+                                        controller: controller.nameController,
+                                        keyboardType: TextInputType.text,
+                                        textCapitalization:
+                                            TextCapitalization.sentences,
+                                        validator: (value) {
+                                          if (value!.isEmpty) {
+                                            return 'Nama Lengkap tidak boleh kosong';
+                                          }
+                                          return null;
+                                        },
+                                        decoration: InputDecoration(
+                                          hintText: 'Nama Lengkap',
+                                          fillColor: AppColors.tertiaryColor,
+                                          filled: true,
+                                          border: const OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(10.0),
+                                            ),
+                                            borderSide: BorderSide.none,
                                           ),
-                                          borderSide: BorderSide.none,
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  const SizedBox(height: 5),
-                                  SizedBox(
-                                    height: Get.height * 0.06,
-                                    width: Get.width * 0.4,
-                                    child: TextFormField(
-                                      keyboardType: TextInputType.text,
-                                      textCapitalization:
-                                          TextCapitalization.sentences,
-                                      decoration: InputDecoration(
-                                        hintText: 'Keahlian',
-                                        fillColor: AppColors.tertiaryColor,
-                                        filled: true,
-                                        border: const OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                            Radius.circular(10.0),
+                                    const SizedBox(height: 5),
+                                    SizedBox(
+                                      height: Get.height * 0.06,
+                                      width: Get.width * 0.4,
+                                      child: TextFormField(
+                                        controller: controller.skillController,
+                                        keyboardType: TextInputType.text,
+                                        textCapitalization:
+                                            TextCapitalization.sentences,
+                                        validator: (value) {
+                                          if (value!.isEmpty) {
+                                            return 'Keahlian tidak boleh kosong';
+                                          }
+                                          return null;
+                                        },
+                                        decoration: InputDecoration(
+                                          hintText: 'Keahlian',
+                                          fillColor: AppColors.tertiaryColor,
+                                          filled: true,
+                                          border: const OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(10.0),
+                                            ),
+                                            borderSide: BorderSide.none,
                                           ),
-                                          borderSide: BorderSide.none,
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  const SizedBox(height: 5),
-                                  Container(
-                                    height: Get.height * 0.2,
-                                    width: Get.width * 0.4,
-                                    color: AppColors.tertiaryColor,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: GridView(
-                                        physics:
-                                            const NeverScrollableScrollPhysics(),
-                                        gridDelegate:
-                                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                                mainAxisExtent: 20,
-                                                crossAxisCount: 3,
-                                                crossAxisSpacing: 10,
-                                                mainAxisSpacing: 10),
-                                        children: [
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                color: AppColors.secondaryColor,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
+                                    SizedBox(
+                                      height: Get.height * 0.06,
+                                      width: Get.width * 0.4,
+                                      child: TextFormField(
+                                        controller: controller
+                                            .virtualAccountPaymentController,
+                                        keyboardType: TextInputType.text,
+                                        textCapitalization:
+                                            TextCapitalization.sentences,
+                                        validator: (value) {
+                                          if (value!.isEmpty) {
+                                            return 'Virtual Account Payment tidak boleh kosong';
+                                          }
+                                          return null;
+                                        },
+                                        decoration: InputDecoration(
+                                          hintText: 'Virtual Account Payment',
+                                          fillColor: AppColors.tertiaryColor,
+                                          filled: true,
+                                          border: const OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(10.0),
                                             ),
-                                            child: Center(
-                                              child: Text('14.30'),
-                                            ),
+                                            borderSide: BorderSide.none,
                                           ),
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                color: AppColors.secondaryColor,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                            ),
-                                            child: Center(
-                                              child: Text('14.30'),
-                                            ),
-                                          ),
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                color: AppColors.secondaryColor,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                            ),
-                                            child: Center(
-                                              child: Text('14.30'),
-                                            ),
-                                          ),
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                color: AppColors.secondaryColor,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                            ),
-                                            child: Center(
-                                              child: Text('14.30'),
-                                            ),
-                                          ),
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                color: AppColors.secondaryColor,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                            ),
-                                            child: Center(
-                                              child: Text('14.30'),
-                                            ),
-                                          ),
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                color: AppColors.secondaryColor,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                            ),
-                                            child: Center(
-                                              child: Text('14.30'),
-                                            ),
-                                          ),
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                color: AppColors.secondaryColor,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                            ),
-                                            child: Center(
-                                              child: Text('14.30'),
-                                            ),
-                                          ),
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                color: AppColors.secondaryColor,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                            ),
-                                            child: Center(
-                                              child: Text('14.30'),
-                                            ),
-                                          ),
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                color: AppColors.secondaryColor,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                            ),
-                                            child: Center(
-                                              child: Text('14.30'),
-                                            ),
-                                          ),
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                color: AppColors.secondaryColor,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                            ),
-                                            child: Center(
-                                              child: Text('14.30'),
-                                            ),
-                                          ),
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                color: AppColors.secondaryColor,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                            ),
-                                            child: Center(
-                                              child: Text('14.30'),
-                                            ),
-                                          ),
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                color: AppColors.secondaryColor,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                            ),
-                                            child: Center(
-                                              child: Text('14.30'),
-                                            ),
-                                          ),
-                                        ],
+                                        ),
                                       ),
                                     ),
-                                  )
-                                ],
-                              ),
-                            ),
-                            SizedBox(
-                              height: Get.height * 0.3,
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Container(
-                                    height: Get.height * 0.2,
-                                    width: Get.width * 0.4,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: AppColors.tertiaryColor.shade700,
-                                    ),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        SvgPicture.asset(AppImages.icAdd2),
-                                        const SizedBox(height: 10),
-                                        Text(
-                                          'Tambahkan Gambar',
-                                          style: TextStyle(
-                                            fontSize: 10,
-                                            color: AppColors.tertiaryColor,
+                                    const SizedBox(height: 5),
+                                    Container(
+                                      height: Get.height * 0.2,
+                                      width: Get.width * 0.4,
+                                      decoration: BoxDecoration(
+                                        color: AppColors.tertiaryColor,
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Obx(
+                                          () => GridView(
+                                            physics:
+                                                const NeverScrollableScrollPhysics(),
+                                            gridDelegate:
+                                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                              mainAxisExtent: 20,
+                                              crossAxisCount: 3,
+                                              crossAxisSpacing: 10,
+                                              mainAxisSpacing: 10,
+                                            ),
+                                            children: controller
+                                                .psikologController
+                                                .psikologs[
+                                                    Get.arguments?['index'] ??
+                                                        0]
+                                                .psikologSchedules
+                                                .map(
+                                                  (e) => GestureDetector(
+                                                    onTap: () => controller
+                                                        .psikologController
+                                                        .toggleSchedule(e),
+                                                    child: Container(
+                                                      decoration: BoxDecoration(
+                                                        color: e.isSelected
+                                                            ? AppColors
+                                                                .secondaryColor
+                                                            : Colors.white,
+                                                        border: Border.all(
+                                                          color: AppColors
+                                                              .secondaryColor,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5),
+                                                      ),
+                                                      child: Center(
+                                                        child: Text(
+                                                          e.time,
+                                                          style: TextStyle(
+                                                            color: e.isSelected
+                                                                ? Colors.white
+                                                                : Colors.black,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                )
+                                                .toList(),
                                           ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                    height: 50,
-                                    width: Get.width * 0.4,
-                                    decoration: BoxDecoration(
-                                      color: AppColors.secondaryColor,
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: const Center(
-                                      child: Text(
-                                        'Update Profile',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                    Obx(
+                                      () => Visibility(
+                                        visible: !controller
+                                            .psikologController
+                                            .psikologs[
+                                                Get.arguments?['index'] ?? 0]
+                                            .psikologSchedules
+                                            .any(
+                                          (element) => element.isSelected,
+                                        ),
+                                        child: const Text(
+                                          "Jadwal Tidak Boleh Kosong",
+                                          style: TextStyle(color: Colors.red),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            )
-                          ],
+                              Expanded(
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    GetBuilder<EditPsikologController>(
+                                      init: EditPsikologController(),
+                                      initState: (_) {},
+                                      builder: (_) {
+                                        return FormInputImage(
+                                          valueImage: controller.image,
+                                          changeImage: () =>
+                                              controller.getImage(),
+                                          resetImage: () =>
+                                              controller.resetImage(),
+                                          fromInternet: controller
+                                              .isImageFromInternet.value,
+                                          imageUrl: controller.imageUrl,
+                                        );
+                                      },
+                                    ),
+                                    const SizedBox(height: 12),
+                                    GestureDetector(
+                                      onTap: () => controller.onSubmit(),
+                                      child: Container(
+                                        height: 50,
+                                        width: Get.width * 0.4,
+                                        decoration: BoxDecoration(
+                                          color: AppColors.secondaryColor,
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        child: const Center(
+                                          child: Text(
+                                            'Update Profile',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),

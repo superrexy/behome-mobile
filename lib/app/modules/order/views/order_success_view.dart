@@ -3,7 +3,6 @@ import 'package:behome_mobile/app/common/values/app_images.dart';
 import 'package:behome_mobile/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
 import 'package:get/get.dart';
 
 import '../controllers/order_controller.dart';
@@ -88,20 +87,22 @@ class OrderSuccessView extends GetView<OrderController> {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    'Isa Anugrah, S.Psi',
+                    controller.psikologController
+                        .psikologs[Get.arguments?['index']].name,
                     style: TextStyle(
                         color: AppColors.secondaryColor,
                         fontWeight: FontWeight.bold,
                         fontSize: 16),
                   ),
                   Text(
-                    'Inner Child, Toxic Family',
+                    controller.psikologController
+                        .psikologs[Get.arguments?['index']].skill,
                     style: TextStyle(
                       color: AppColors.secondaryColor,
                     ),
                   ),
                   Text(
-                    '16:20',
+                    Get.arguments?['date'],
                     style: TextStyle(
                       color: AppColors.secondaryColor,
                     ),
@@ -128,7 +129,7 @@ class OrderSuccessView extends GetView<OrderController> {
                   ),
                   const SizedBox(height: 10),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () => Get.offNamed(Routes.HOME),
                     child: Container(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 50, vertical: 10),

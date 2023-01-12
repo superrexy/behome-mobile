@@ -10,14 +10,21 @@ import '../common/values/app_images.dart';
 
 class FormInputImage extends StatelessWidget {
   const FormInputImage(
-      {super.key, this.valueImage, this.changeImage, this.resetImage});
+      {super.key,
+      this.valueImage,
+      this.changeImage,
+      this.resetImage,
+      this.fromInternet,
+      this.imageUrl});
   final File? valueImage;
   final Function()? changeImage;
   final Function()? resetImage;
+  final bool? fromInternet;
+  final String? imageUrl;
 
   @override
   Widget build(BuildContext context) {
-    return valueImage != null
+    return valueImage != null || fromInternet == true
         ? Container(
             height: Get.height * 0.2,
             width: Get.width * 0.4,
@@ -26,7 +33,9 @@ class FormInputImage extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
               color: AppColors.tertiaryColor.shade700,
               image: DecorationImage(
-                image: FileImage(valueImage!),
+                image: fromInternet == true
+                    ? NetworkImage(imageUrl!)
+                    : FileImage(valueImage!) as ImageProvider,
                 fit: BoxFit.cover,
               ),
             ),

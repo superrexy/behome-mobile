@@ -23,6 +23,7 @@ class HomeController extends GetxController {
     updatedAt: DateTime.now(),
   ).obs;
   final news = <NewsDataResponse>[].obs;
+  final isSort = false.obs;
 
   // FUNCTION
   Future<void> getProfile() async {
@@ -53,6 +54,14 @@ class HomeController extends GetxController {
       }
     } catch (e) {
       print(e);
+    }
+  }
+
+  void orderByDate(bool asc) async {
+    if (asc) {
+      news.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+    } else {
+      news.sort((a, b) => a.createdAt.compareTo(b.createdAt));
     }
   }
 

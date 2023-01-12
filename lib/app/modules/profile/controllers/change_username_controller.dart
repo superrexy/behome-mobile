@@ -1,27 +1,29 @@
 import 'dart:io';
 
-import 'package:behome_mobile/app/data/news_provider.dart';
-import 'package:behome_mobile/app/model/request/news_request.dart';
+import 'package:behome_mobile/app/data/users_provider.dart';
+import 'package:behome_mobile/app/model/request/users_request.dart';
 import 'package:behome_mobile/app/modules/home/controllers/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
-class NewsController extends GetxController {
+class ChangeUsernameController extends GetxController {
   // CONTROLLER
   final HomeController homeController = Get.find<HomeController>();
 
   // PROVIDER
-  final NewsProvider newsProvider = NewsProvider();
+  final UsersProvider usersProvider = UsersProvider();
 
   // FORM
   final formKey = GlobalKey<FormState>();
-  final TextEditingController descriptionController = TextEditingController();
+  final TextEditingController usernameController = TextEditingController();
 
   // FUNCTION
   // Image Picker
   File? image;
   final ImagePicker picker = ImagePicker();
+  final isImageFromInternet = false.obs;
+  String? imageUrl;
 
   Future<void> getImage() async {
     final XFile? pickedFile =
@@ -36,6 +38,7 @@ class NewsController extends GetxController {
   }
 
   Future<void> resetImage() async {
+    isImageFromInternet.value = false;
     image = null;
     update();
   }
@@ -43,19 +46,19 @@ class NewsController extends GetxController {
   Future<void> onSubmit() async {
     try {
       if (formKey.currentState!.validate()) {
-        final NewsRequest request = NewsRequest(
-          description: descriptionController.text,
-          newsImage: image,
+        final UsersRequest request = UsersRequest(
+          name: usernameController.text,
+          userImage: image,
         );
 
-        final response = await newsProvider.createNews(request);
+        final response = await usersProvider.updateProfile(request);
 
-        if (response) {
-          await homeController.getNews().then((value) {
+        if (response != null) {
+          await homeController.getProfile().then((value) {
             Get.back();
             Get.snackbar(
               'Berhasil',
-              'Berhasil menambahkan kabar berita',
+              'Berhasil memperbarui profile',
               backgroundColor: Colors.green,
               colorText: Colors.white,
             );
@@ -73,6 +76,15 @@ class NewsController extends GetxController {
     }
   }
 
+  void formInit() {
+    if (homeController.user.value.userImage != null) {
+      isImageFromInternet.value = true;
+      imageUrl = homeController.user.value.userImage;
+    }
+
+    usernameController.text = homeController.user.value.name;
+  }
+
   @override
   void onInit() {
     super.onInit();
@@ -80,6 +92,7 @@ class NewsController extends GetxController {
 
   @override
   void onReady() {
+    formInit();
     super.onReady();
   }
 

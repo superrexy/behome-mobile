@@ -42,7 +42,7 @@ class UsersDataResponse {
     required this.phone,
     required this.email,
     required this.role,
-    this.userImage,
+    this.userImage = null,
     required this.createdAt,
     required this.updatedAt,
   });

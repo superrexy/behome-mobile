@@ -14,10 +14,8 @@ class LoginController extends GetxController {
 
   // FORM
   final formKey = GlobalKey<FormState>();
-  final TextEditingController emailController =
-      TextEditingController(text: 'admin@behome.com');
-  final TextEditingController passwordController =
-      TextEditingController(text: 'password');
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   // FUNCTION
   Future<void> onSubmit() async {

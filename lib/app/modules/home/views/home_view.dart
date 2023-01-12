@@ -178,7 +178,11 @@ class HomeView extends GetView<HomeController> {
                               ),
                             ),
                             GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                controller.orderByDate(controller.isSort.value);
+                                controller.isSort.value =
+                                    !controller.isSort.value;
+                              },
                               child: SvgPicture.asset(AppImages.icArrowUpDown),
                             )
                           ],

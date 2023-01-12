@@ -1,9 +1,10 @@
+import 'package:behome_mobile/app/modules/home/controllers/home_controller.dart';
 import 'package:get/get.dart';
 
 class ProfileController extends GetxController {
-  //TODO: Implement ProfileController
+  // CONTROLLER
+  final HomeController homeController = Get.find<HomeController>();
 
-  final count = 0.obs;
   @override
   void onInit() {
     super.onInit();
@@ -18,6 +19,4 @@ class ProfileController extends GetxController {
   void onClose() {
     super.onClose();
   }
-
-  void increment() => count.value++;
 }

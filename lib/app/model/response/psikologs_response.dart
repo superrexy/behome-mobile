@@ -15,19 +15,20 @@ class PsikologsResponse {
 
   bool status;
   String message;
-  PsikologsDataResponse data;
+  List<PsikologsDataResponse> data;
 
   factory PsikologsResponse.fromJson(Map<String, dynamic> json) =>
       PsikologsResponse(
         status: json["status"],
         message: json["message"],
-        data: PsikologsDataResponse.fromJson(json["data"]),
+        data: List<PsikologsDataResponse>.from(
+            json["data"].map((x) => PsikologsDataResponse.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
         "status": status,
         "message": message,
-        "data": data.toJson(),
+        "data": List<dynamic>.from(data.map((x) => x.toJson())),
       };
 }
 
@@ -36,23 +37,23 @@ class PsikologsDataResponse {
     required this.id,
     required this.name,
     required this.skill,
-    required this.psikologImage,
+    this.psikologImage,
     required this.virtualAccountPayment,
     required this.userId,
     this.createdAt,
     this.updatedAt,
-    this.psikologSchedules,
+    required this.psikologSchedules,
   });
 
   int id;
   String name;
   String skill;
-  String psikologImage;
+  String? psikologImage;
   String virtualAccountPayment;
   int userId;
   DateTime? createdAt;
   DateTime? updatedAt;
-  List<PsikologSchedule>? psikologSchedules;
+  List<PsikologSchedule> psikologSchedules;
 
   factory PsikologsDataResponse.fromJson(Map<String, dynamic> json) =>
       PsikologsDataResponse(
@@ -76,8 +77,8 @@ class PsikologsDataResponse {
         "psikolog_image": psikologImage,
         "virtual_account_payment": virtualAccountPayment,
         "user_id": userId,
-        "created_at": createdAt?.toIso8601String(),
-        "updated_at": updatedAt?.toIso8601String(),
+        "created_at": createdAt!.toIso8601String(),
+        "updated_at": updatedAt!.toIso8601String(),
         "psikolog_schedules":
             List<dynamic>.from(psikologSchedules!.map((x) => x.toJson())),
       };
@@ -89,16 +90,18 @@ class PsikologSchedule {
     required this.time,
     required this.isSelected,
     required this.psikologId,
-    required this.createdAt,
-    required this.updatedAt,
+    this.userSelected = false,
+    this.createdAt,
+    this.updatedAt,
   });
 
   int id;
   String time;
   bool isSelected;
+  bool userSelected;
   int psikologId;
-  DateTime createdAt;
-  DateTime updatedAt;
+  DateTime? createdAt;
+  DateTime? updatedAt;
 
   factory PsikologSchedule.fromJson(Map<String, dynamic> json) =>
       PsikologSchedule(
@@ -115,7 +118,7 @@ class PsikologSchedule {
         "time": time,
         "is_selected": isSelected,
         "psikolog_id": psikologId,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
+        "created_at": createdAt!.toIso8601String(),
+        "updated_at": updatedAt!.toIso8601String(),
       };
 }

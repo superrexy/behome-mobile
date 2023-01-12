@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:behome_mobile/app/model/response/psikologs_response.dart';
+
 PsikologsRequest psikologsRequestFromJson(String str) =>
     PsikologsRequest.fromJson(json.decode(str));
 
@@ -20,14 +22,14 @@ class PsikologsRequest {
   String skill;
   String virtualAccountPayment;
   File? psikologsImage;
-  List<Schedule> schedules;
+  List<PsikologSchedule> schedules;
 
   factory PsikologsRequest.fromJson(Map<String, dynamic> json) =>
       PsikologsRequest(
         name: json["name"],
         skill: json["skill"],
         virtualAccountPayment: json["virtual_account_payment"],
-        schedules: List<Schedule>.from(
+        schedules: List<PsikologSchedule>.from(
             json["schedules"].map((x) => Schedule.fromJson(x))),
       );
 
