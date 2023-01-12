@@ -13,6 +13,8 @@ abstract class Routes {
   static const CHANGEUSERNAME = _Paths.CHANGEUSERNAME;
   static const CHANGEEMAIL = _Paths.CHANGEEMAIL;
   static const NEWS = _Paths.NEWS;
+  static const ORDER = _Paths.ORDER;
+  static const ORDER_SUCCESS = _Paths.ORDER_SUCCESS;
 }
 
 abstract class _Paths {
@@ -27,4 +29,6 @@ abstract class _Paths {
   static const CHANGEUSERNAME = '/change-username';
   static const CHANGEEMAIL = '/change-email';
   static const NEWS = '/news';
+  static const ORDER = '/order';
+  static const ORDER_SUCCESS = '/order-success';
 }

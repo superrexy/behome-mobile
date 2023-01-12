@@ -1,4 +1,4 @@
-import 'package:behome_mobile/app/modules/psikolog/views/edit_psikolog.dart';
+import 'package:behome_mobile/app/modules/order/views/order_success_view.dart';
 import 'package:get/get.dart';
 
 import '../modules/authentication/login/bindings/login_binding.dart';
@@ -10,11 +10,14 @@ import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/news/bindings/news_binding.dart';
 import '../modules/news/views/news_view.dart';
+import '../modules/order/bindings/order_binding.dart';
+import '../modules/order/views/order_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/change_email.dart';
 import '../modules/profile/views/change_username.dart';
 import '../modules/profile/views/profile_view.dart';
 import '../modules/psikolog/bindings/psikolog_binding.dart';
+import '../modules/psikolog/views/edit_psikolog.dart';
 import '../modules/psikolog/views/psikolog_view.dart';
 
 part 'app_routes.dart';
@@ -74,6 +77,16 @@ class AppPages {
       name: _Paths.NEWS,
       page: () => const NewsView(),
       binding: NewsBinding(),
+    ),
+    GetPage(
+      name: _Paths.ORDER,
+      page: () => const OrderView(),
+      binding: OrderBinding(),
+    ),
+    GetPage(
+      name: _Paths.ORDER_SUCCESS,
+      page: () => const OrderSuccessView(),
+      binding: OrderBinding(),
     ),
   ];
 }
