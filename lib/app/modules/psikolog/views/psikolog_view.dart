@@ -73,12 +73,13 @@ class PsikologView extends GetView<PsikologController> {
                     ),
                   ),
                   const SizedBox(height: 22),
-                  SizedBox(
-                    height: !controller.homeController.user.value.role
-                            .contains("psikolog")
-                        ? Get.height * 0.65
-                        : Get.height * 0.25,
-                    width: Get.width,
+                  Container(
+                    constraints: BoxConstraints(
+                      maxHeight: !controller.homeController.user.value.role
+                              .contains("psikolog")
+                          ? Get.height * 0.8
+                          : Get.height * 0.45,
+                    ),
                     child: GetBuilder<PsikologController>(
                       init: PsikologController(),
                       initState: (_) {},

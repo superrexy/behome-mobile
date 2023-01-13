@@ -57,7 +57,8 @@ class EditPsikologController extends GetxController {
         final PsikologsRequest request = PsikologsRequest(
           name: nameController.text,
           schedules: psikologController
-              .psikologs[Get.arguments?["index"]].psikologSchedules,
+              .psikologs[Get.arguments?["index"]].psikologSchedules
+              .toList(),
           skill: skillController.text,
           virtualAccountPayment: virtualAccountPaymentController.text,
           psikologsImage: image,

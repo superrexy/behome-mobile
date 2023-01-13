@@ -34,7 +34,6 @@ class PsikologCard extends StatelessWidget {
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
         children: [
           Visibility(
             visible: isAdmin,
@@ -104,7 +103,7 @@ class PsikologCard extends StatelessWidget {
                   const SizedBox(height: 10),
                   psikologSchedules.isNotEmpty
                       ? SizedBox(
-                          height: Get.height * 0.25,
+                          height: Get.height * 0.3,
                           child: GridView(
                             physics: const NeverScrollableScrollPhysics(),
                             gridDelegate:

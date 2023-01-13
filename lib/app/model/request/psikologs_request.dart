@@ -37,7 +37,8 @@ class PsikologsRequest {
         "name": name,
         "skill": skill,
         "virtual_account_payment": virtualAccountPayment,
-        "schedules": List<dynamic>.from(schedules.map((x) => x.toJson())),
+        "schedules": jsonEncode(
+            List<dynamic>.from(schedules.map((x) => x.toJson())).toList()),
       };
 }
 

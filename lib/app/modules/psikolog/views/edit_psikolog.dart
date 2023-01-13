@@ -93,93 +93,81 @@ class EditPsikolog extends GetView<EditPsikologController> {
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    SizedBox(
-                                      height: Get.height * 0.06,
-                                      width: Get.width * 0.4,
-                                      child: TextFormField(
-                                        controller: controller.nameController,
-                                        keyboardType: TextInputType.text,
-                                        textCapitalization:
-                                            TextCapitalization.sentences,
-                                        validator: (value) {
-                                          if (value!.isEmpty) {
-                                            return 'Nama Lengkap tidak boleh kosong';
-                                          }
-                                          return null;
-                                        },
-                                        decoration: InputDecoration(
-                                          hintText: 'Nama Lengkap',
-                                          fillColor: AppColors.tertiaryColor,
-                                          filled: true,
-                                          border: const OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(
-                                              Radius.circular(10.0),
-                                            ),
-                                            borderSide: BorderSide.none,
+                                    TextFormField(
+                                      controller: controller.nameController,
+                                      keyboardType: TextInputType.text,
+                                      textCapitalization:
+                                          TextCapitalization.sentences,
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return 'Nama Lengkap tidak boleh kosong';
+                                        }
+                                        return null;
+                                      },
+                                      decoration: InputDecoration(
+                                        hintText: 'Nama Lengkap',
+                                        fillColor: AppColors.tertiaryColor,
+                                        filled: true,
+                                        border: const OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(10.0),
                                           ),
+                                          borderSide: BorderSide.none,
                                         ),
                                       ),
                                     ),
-                                    const SizedBox(height: 5),
-                                    SizedBox(
-                                      height: Get.height * 0.06,
-                                      width: Get.width * 0.4,
-                                      child: TextFormField(
-                                        controller: controller.skillController,
-                                        keyboardType: TextInputType.text,
-                                        textCapitalization:
-                                            TextCapitalization.sentences,
-                                        validator: (value) {
-                                          if (value!.isEmpty) {
-                                            return 'Keahlian tidak boleh kosong';
-                                          }
-                                          return null;
-                                        },
-                                        decoration: InputDecoration(
-                                          hintText: 'Keahlian',
-                                          fillColor: AppColors.tertiaryColor,
-                                          filled: true,
-                                          border: const OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(
-                                              Radius.circular(10.0),
-                                            ),
-                                            borderSide: BorderSide.none,
+                                    const SizedBox(height: 12),
+                                    TextFormField(
+                                      controller: controller.skillController,
+                                      keyboardType: TextInputType.text,
+                                      textCapitalization:
+                                          TextCapitalization.sentences,
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return 'Keahlian tidak boleh kosong';
+                                        }
+                                        return null;
+                                      },
+                                      decoration: InputDecoration(
+                                        hintText: 'Keahlian',
+                                        fillColor: AppColors.tertiaryColor,
+                                        filled: true,
+                                        border: const OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(10.0),
                                           ),
+                                          borderSide: BorderSide.none,
                                         ),
                                       ),
                                     ),
-                                    SizedBox(
-                                      height: Get.height * 0.06,
-                                      width: Get.width * 0.4,
-                                      child: TextFormField(
-                                        controller: controller
-                                            .virtualAccountPaymentController,
-                                        keyboardType: TextInputType.text,
-                                        textCapitalization:
-                                            TextCapitalization.sentences,
-                                        validator: (value) {
-                                          if (value!.isEmpty) {
-                                            return 'Virtual Account Payment tidak boleh kosong';
-                                          }
-                                          return null;
-                                        },
-                                        decoration: InputDecoration(
-                                          hintText: 'Virtual Account Payment',
-                                          fillColor: AppColors.tertiaryColor,
-                                          filled: true,
-                                          border: const OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(
-                                              Radius.circular(10.0),
-                                            ),
-                                            borderSide: BorderSide.none,
+                                    const SizedBox(height: 12),
+                                    TextFormField(
+                                      controller: controller
+                                          .virtualAccountPaymentController,
+                                      keyboardType: TextInputType.text,
+                                      textCapitalization:
+                                          TextCapitalization.sentences,
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return 'Virtual Account Payment tidak boleh kosong';
+                                        }
+                                        return null;
+                                      },
+                                      decoration: InputDecoration(
+                                        hintText: 'Virtual Account Payment',
+                                        fillColor: AppColors.tertiaryColor,
+                                        filled: true,
+                                        border: const OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(10.0),
                                           ),
+                                          borderSide: BorderSide.none,
                                         ),
                                       ),
                                     ),
-                                    const SizedBox(height: 5),
+                                    const SizedBox(height: 12),
                                     Container(
                                       height: Get.height * 0.2,
-                                      width: Get.width * 0.4,
                                       decoration: BoxDecoration(
                                         color: AppColors.tertiaryColor,
                                         borderRadius: BorderRadius.circular(10),

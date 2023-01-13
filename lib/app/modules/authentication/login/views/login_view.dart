@@ -32,12 +32,12 @@ class LoginView extends GetView<LoginController> {
             right: 0,
             child: Image.asset(
               AppImages.imgLogoWithCircle,
-              width: Get.width * 0.6,
-              height: Get.width * 0.5,
+              width: Get.width * 0.4,
+              height: Get.width * 0.4,
             ),
           ),
           Positioned(
-            top: Get.height * 0.46,
+            top: Get.height * 0.40,
             left: 0,
             right: 0,
             child: Column(
@@ -164,7 +164,7 @@ class LoginView extends GetView<LoginController> {
                               ),
                             )
                           ],
-                        )
+                        ),
                       ],
                     ),
                   ),

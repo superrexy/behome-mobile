@@ -112,7 +112,7 @@ class ProfileView extends GetView<ProfileController> {
                             const SizedBox(height: 20),
                             SizedBox(
                               width: Get.width * 0.6,
-                              height: Get.height * 0.075,
+                              height: Get.height * 0.095,
                               child: Column(
                                 children: [
                                   Row(

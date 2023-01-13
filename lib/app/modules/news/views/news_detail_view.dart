@@ -44,11 +44,13 @@ class NewsDetailView extends GetView<NewsController> {
                       ),
                       const Expanded(
                         child: Center(
-                          child: Text(
-                            "Kabar Berita",
-                            style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
+                          child: FittedBox(
+                            child: Text(
+                              "Kabar Berita",
+                              style: TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ),
