@@ -18,7 +18,6 @@ class HomeController extends GetxController {
     phone: '',
     email: '',
     role: '',
-    userImage: '',
     createdAt: DateTime.now(),
     updatedAt: DateTime.now(),
   ).obs;

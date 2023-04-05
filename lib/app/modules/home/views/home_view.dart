@@ -94,16 +94,25 @@ class HomeView extends GetView<HomeController> {
                               ),
                             ),
                             child: Obx(
-                              () => CircleAvatar(
-                                radius: 30.0,
-                                backgroundColor: Colors.transparent,
-                                backgroundImage:
-                                    controller.user.value.userImage != null
-                                        ? NetworkImage(AppConstants.baseURL +
-                                            controller.user.value.userImage!)
-                                        : const AssetImage(AppImages.imgUser)
-                                            as ImageProvider,
-                              ),
+                              () => controller.user.value.userImage != "" ||
+                                      controller.user.value.userImage != null
+                                  ? CircleAvatar(
+                                      radius: 30.0,
+                                      backgroundColor: Colors.transparent,
+                                      backgroundImage: controller
+                                                  .user.value.userImage !=
+                                              null
+                                          ? NetworkImage(AppConstants.baseURL +
+                                              controller.user.value.userImage!)
+                                          : const AssetImage(AppImages.imgUser)
+                                              as ImageProvider,
+                                    )
+                                  : const CircleAvatar(
+                                      radius: 30.0,
+                                      backgroundColor: Colors.transparent,
+                                      backgroundImage:
+                                          AssetImage(AppImages.imgUser),
+                                    ),
                             ),
                           ),
                           const VerticalDivider(

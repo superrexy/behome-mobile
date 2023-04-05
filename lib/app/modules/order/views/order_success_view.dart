@@ -2,6 +2,7 @@ import 'package:behome_mobile/app/common/values/app_colors.dart';
 import 'package:behome_mobile/app/common/values/app_images.dart';
 import 'package:behome_mobile/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
@@ -101,11 +102,23 @@ class OrderSuccessView extends GetView<OrderController> {
                       color: AppColors.secondaryColor,
                     ),
                   ),
-                  Text(
-                    Get.arguments?['date'],
-                    style: TextStyle(
-                      color: AppColors.secondaryColor,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        controller.psikologController.dateController.text,
+                        style: TextStyle(
+                          color: AppColors.secondaryColor,
+                        ),
+                      ),
+                      SizedBox(width: 10.w),
+                      Text(
+                        Get.arguments?['date'],
+                        style: TextStyle(
+                          color: AppColors.secondaryColor,
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 10),
                   Container(
@@ -129,7 +142,13 @@ class OrderSuccessView extends GetView<OrderController> {
                   ),
                   const SizedBox(height: 10),
                   GestureDetector(
-                    onTap: () => Get.offNamed(Routes.HOME),
+                    onTap: () => Get.offAllNamed(
+                      Routes.CHAT,
+                      arguments: {
+                        'index': Get.arguments?['index'],
+                      },
+                      predicate: (route) => route.settings.name == Routes.HOME,
+                    ),
                     child: Container(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 50, vertical: 10),

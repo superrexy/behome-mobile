@@ -1,5 +1,3 @@
-import 'package:behome_mobile/app/modules/news/views/news_detail_view.dart';
-import 'package:behome_mobile/app/modules/order/views/order_success_view.dart';
 import 'package:get/get.dart';
 
 import '../modules/authentication/login/bindings/login_binding.dart';
@@ -7,11 +5,15 @@ import '../modules/authentication/login/views/login_view.dart';
 import '../modules/authentication/register/bindings/register_binding.dart';
 import '../modules/authentication/register/views/register_success_view.dart';
 import '../modules/authentication/register/views/register_view.dart';
+import '../modules/chat/bindings/chat_binding.dart';
+import '../modules/chat/views/chat_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/news/bindings/news_binding.dart';
+import '../modules/news/views/news_detail_view.dart';
 import '../modules/news/views/news_view.dart';
 import '../modules/order/bindings/order_binding.dart';
+import '../modules/order/views/order_success_view.dart';
 import '../modules/order/views/order_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/change_email.dart';
@@ -93,6 +95,11 @@ class AppPages {
       name: _Paths.ORDER_SUCCESS,
       page: () => const OrderSuccessView(),
       binding: OrderBinding(),
+    ),
+    GetPage(
+      name: _Paths.CHAT,
+      page: () => const ChatView(),
+      binding: ChatBinding(),
     ),
   ];
 }

@@ -1,6 +1,7 @@
 import 'package:behome_mobile/app/data/psikologs_provider.dart';
 import 'package:behome_mobile/app/model/response/psikologs_response.dart';
 import 'package:behome_mobile/app/modules/home/controllers/home_controller.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class PsikologController extends GetxController {
@@ -12,6 +13,7 @@ class PsikologController extends GetxController {
 
   // OBSERVABLE
   final psikologs = <PsikologsDataResponse>[].obs;
+  final dateController = TextEditingController();
 
   // FUNCTION
   Future<void> getPsikolog() async {
