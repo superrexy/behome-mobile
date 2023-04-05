@@ -91,7 +91,7 @@ class PsikologCard extends StatelessWidget {
               color: AppColors.secondaryColor,
             ),
           ),
-          SizedBox(height: 20.h),
+          SizedBox(height: 21.h),
           Visibility(
             visible: !isAdmin,
             child: Padding(
