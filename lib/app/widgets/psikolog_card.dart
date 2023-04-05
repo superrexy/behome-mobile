@@ -169,17 +169,16 @@ class PsikologCard extends StatelessWidget {
                   psikologSchedules.isNotEmpty
                       ? Container(
                           constraints: BoxConstraints(
-                            maxHeight: 200.h,
+                            maxHeight: 170.h,
                           ),
                           child: GridView(
                             physics: const NeverScrollableScrollPhysics(),
                             gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              mainAxisExtent: 30,
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              mainAxisExtent: 40,
                               crossAxisCount: 3,
                               crossAxisSpacing: 30,
                               mainAxisSpacing: 15,
-                              childAspectRatio: Get.width / Get.height,
                             ),
                             children: psikologSchedules
                                 .where((element) => element.isSelected == true)

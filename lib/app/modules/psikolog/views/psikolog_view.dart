@@ -81,13 +81,11 @@ class PsikologView extends GetView<PsikologController> {
               constraints: BoxConstraints(
                 maxHeight:
                     controller.homeController.user.value.role != "psikolog"
-                        ? 750.h
+                        ? 700.h
                         : 350.h,
               ),
               child: GetBuilder<PsikologController>(
-                init: PsikologController(),
-                initState: (_) {},
-                builder: (_) {
+                builder: (controller) {
                   return ListView.builder(
                     itemBuilder: (context, index) {
                       final psikolog = controller.psikologs[index];

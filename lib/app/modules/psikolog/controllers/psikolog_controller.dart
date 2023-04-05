@@ -32,6 +32,7 @@ class PsikologController extends GetxController {
   void toggleSchedule(PsikologSchedule item) {
     item.isSelected = !item.isSelected;
     psikologs.refresh();
+    update();
   }
 
   void userSelectSchedule(PsikologSchedule item, int index) {
