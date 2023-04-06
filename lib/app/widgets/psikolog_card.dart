@@ -169,7 +169,7 @@ class PsikologCard extends StatelessWidget {
                   psikologSchedules.isNotEmpty
                       ? Container(
                           constraints: BoxConstraints(
-                            maxHeight: 170.h,
+                            maxHeight: 250.h,
                           ),
                           child: GridView(
                             physics: const NeverScrollableScrollPhysics(),

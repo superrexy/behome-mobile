@@ -81,7 +81,7 @@ class PsikologView extends GetView<PsikologController> {
               constraints: BoxConstraints(
                 maxHeight:
                     controller.homeController.user.value.role != "psikolog"
-                        ? 700.h
+                        ? 800.h
                         : 350.h,
               ),
               child: GetBuilder<PsikologController>(
