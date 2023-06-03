@@ -1,6 +1,5 @@
 import 'package:behome_mobile/app/common/values/app_colors.dart';
 import 'package:behome_mobile/app/common/values/app_images.dart';
-import 'package:behome_mobile/app/routes/app_pages.dart';
 import 'package:behome_mobile/app/widgets/form_input_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';

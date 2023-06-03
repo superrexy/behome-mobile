@@ -1,13 +1,11 @@
 import 'package:behome_mobile/app/common/values/app_colors.dart';
 import 'package:behome_mobile/app/common/values/app_images.dart';
-import 'package:behome_mobile/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:get/get.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
 
 import '../../../common/values/app_constants.dart';
 import '../controllers/order_controller.dart';
@@ -198,8 +196,7 @@ class OrderView extends GetView<OrderController> {
                                                 .psikologController
                                                 .psikologs[
                                                     Get.arguments?['index']]
-                                                .psikologSchedules!
-                                                .where((val) =>
+                                                .psikologSchedules.where((val) =>
                                                     val.userSelected == true)
                                                 .map((e) => e.time)
                                                 .join() ??
@@ -307,20 +304,7 @@ class OrderView extends GetView<OrderController> {
                           const SizedBox(height: 20),
                           Center(
                             child: GestureDetector(
-                              onTap: () => Get.offAllNamed(Routes.ORDER_SUCCESS,
-                                  predicate: (route) =>
-                                      route.settings.name == Routes.HOME,
-                                  arguments: {
-                                    'index': Get.arguments?['index'],
-                                    'date': controller
-                                        .psikologController
-                                        .psikologs[Get.arguments?['index']]
-                                        .psikologSchedules
-                                        .where(
-                                            (val) => val.userSelected == true)
-                                        .map((e) => e.time)
-                                        .join(),
-                                  }),
+                              onTap: () => controller.createOrder(),
                               child: Container(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 50, vertical: 10),

@@ -83,15 +83,11 @@ class ChangeUsernameController extends GetxController {
       imageUrl = homeController.user.value.userImage;
     }
 
-    usernameController.text = homeController.user.value.name;
+    usernameController.text = homeController.user.value.name!;
 
     update();
   }
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
 
   @override
   void onReady() {
@@ -99,8 +95,4 @@ class ChangeUsernameController extends GetxController {
     super.onReady();
   }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
 }

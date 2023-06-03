@@ -94,16 +94,15 @@ class HomeView extends GetView<HomeController> {
                               ),
                             ),
                             child: Obx(
-                              () => controller.user.value.userImage != "" ||
-                                      controller.user.value.userImage != null
+                              () => controller.user.value.userImage != null
                                   ? CircleAvatar(
                                       radius: 30.0,
                                       backgroundColor: Colors.transparent,
                                       backgroundImage: controller
                                                   .user.value.userImage !=
                                               null
-                                          ? NetworkImage(AppConstants.baseURL +
-                                              controller.user.value.userImage!)
+                                          ? NetworkImage(
+                                              controller.user.value.imageUrl!)
                                           : const AssetImage(AppImages.imgUser)
                                               as ImageProvider,
                                     )
@@ -140,7 +139,11 @@ class HomeView extends GetView<HomeController> {
                                 "Selamat Datang !!",
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
-                              Obx(() => Text(controller.user.value.name)),
+                              Obx(
+                                () => Text(
+                                  controller.user.value.name ?? "-",
+                                ),
+                              ),
                             ],
                           ),
                         ],
@@ -162,6 +165,30 @@ class HomeView extends GetView<HomeController> {
                         child: Center(
                           child: Text(
                             "Informasi Psikolog",
+                            style: TextStyle(
+                                color: AppColors.secondaryColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: GestureDetector(
+                      onTap: () => Get.toNamed(Routes.CHATS),
+                      child: Container(
+                        width: Get.width,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: Center(
+                          child: Text(
+                            "Riwayat",
                             style: TextStyle(
                                 color: AppColors.secondaryColor,
                                 fontWeight: FontWeight.bold,
@@ -237,8 +264,7 @@ class HomeView extends GetView<HomeController> {
                             ),
                             Obx(
                               () => Visibility(
-                                visible: controller.user.value.role
-                                    .contains("psikolog"),
+                                visible: controller.user.value.isAdmin,
                                 child: Center(
                                   child: GestureDetector(
                                     onTap: () => Get.toNamed(Routes.NEWS),

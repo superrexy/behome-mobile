@@ -121,8 +121,9 @@ class ProfileView extends GetView<ProfileController> {
                                     children: [
                                       Obx(
                                         () => Text(
-                                          controller
-                                              .homeController.user.value.name,
+                                          controller.homeController.user.value
+                                                  .name ??
+                                              "-",
                                           style: TextStyle(
                                               color: AppColors.secondaryColor,
                                               fontWeight: FontWeight.bold),
@@ -150,8 +151,9 @@ class ProfileView extends GetView<ProfileController> {
                                     children: [
                                       Obx(
                                         () => Text(
-                                          controller
-                                              .homeController.user.value.email,
+                                          controller.homeController.user.value
+                                                  .email ??
+                                              "-",
                                           style: TextStyle(
                                             color: AppColors.secondaryColor,
                                             fontWeight: FontWeight.bold,

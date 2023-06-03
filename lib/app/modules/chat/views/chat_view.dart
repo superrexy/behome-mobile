@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
 
+import '../../home/controllers/home_controller.dart';
 import '../controllers/chat_controller.dart';
 
 class ChatView extends GetView<ChatController> {
@@ -12,6 +13,7 @@ class ChatView extends GetView<ChatController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           Container(
@@ -60,50 +62,78 @@ class ChatView extends GetView<ChatController> {
                                     color: AppColors.tertiaryColor,
                                     shape: BoxShape.circle,
                                   ),
-                                  child: Center(
-                                    child: Image.asset(
-                                      AppImages.imgUser,
-                                      fit: BoxFit.cover,
-                                      alignment: Alignment.center,
+                                  child: Obx(
+                                    () => Center(
+                                      child: Get.find<HomeController>()
+                                              .user
+                                              .value
+                                              .isPsikolog
+                                          ? controller.user.value.userImage ==
+                                                  null
+                                              ? Image.asset(
+                                                  AppImages.imgUser,
+                                                  fit: BoxFit.cover,
+                                                  alignment: Alignment.center,
+                                                )
+                                              : Image.network(
+                                                  controller
+                                                      .user.value.imageUrl!,
+                                                  fit: BoxFit.cover,
+                                                  alignment: Alignment.center,
+                                                )
+                                          : controller.psikolog.value
+                                                      .psikologImage ==
+                                                  null
+                                              ? Image.asset(
+                                                  AppImages.imgUser,
+                                                  fit: BoxFit.cover,
+                                                  alignment: Alignment.center,
+                                                )
+                                              : Image.network(
+                                                  controller
+                                                      .psikolog.value.imageUrl!,
+                                                  fit: BoxFit.cover,
+                                                  alignment: Alignment.center,
+                                                ),
                                     ),
                                   ),
                                 ),
                                 Obx(
                                   () => Column(
-                                    children: [
-                                      Text(
-                                        controller.psikologController.psikologs
-                                                .isNotEmpty
-                                            ? controller
-                                                    .psikologController
-                                                    .psikologs[
-                                                        Get.arguments?['index']]
-                                                    .name ??
-                                                "-"
-                                            : "-",
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 16.sp,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                      Text(
-                                        controller.psikologController.psikologs
-                                                .isNotEmpty
-                                            ? controller
-                                                    .psikologController
-                                                    .psikologs[
-                                                        Get.arguments?['index']]
-                                                    .skill ??
-                                                "-"
-                                            : "-",
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 12.sp,
-                                          fontWeight: FontWeight.w400,
-                                        ),
-                                      ),
-                                    ],
+                                    children: Get.find<HomeController>()
+                                            .user
+                                            .value
+                                            .isUser
+                                        ? [
+                                            Text(
+                                              controller.psikolog.value.name ??
+                                                  "-",
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 16.sp,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                            Text(
+                                              controller.psikolog.value.skill ??
+                                                  "-",
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 12.sp,
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                            ),
+                                          ]
+                                        : [
+                                            Text(
+                                              controller.user.value.name ?? "-",
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 16.sp,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                          ],
                                   ),
                                 ),
                                 const SizedBox()
@@ -115,96 +145,137 @@ class ChatView extends GetView<ChatController> {
                             thickness: 1.5,
                           ),
                           Expanded(
-                            child: ListView.builder(
-                              itemCount: 10,
-                              itemBuilder: (context, index) {
-                                return Container(
-                                  margin: EdgeInsets.symmetric(
-                                      horizontal: 25.w, vertical: 10.h),
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        width: 40.w,
-                                        padding: const EdgeInsets.all(8).r,
-                                        decoration: BoxDecoration(
-                                          color: AppColors.tertiaryColor,
-                                          shape: BoxShape.circle,
-                                        ),
-                                        child: Center(
-                                          child: Image.asset(
-                                            AppImages.imgUser,
-                                            fit: BoxFit.cover,
-                                            alignment: Alignment.center,
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 10.w,
-                                      ),
-                                      Expanded(
-                                        child: Container(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 10.w, vertical: 10.h),
-                                          decoration: BoxDecoration(
-                                            color: AppColors.tertiaryColor,
-                                            borderRadius:
-                                                BorderRadius.circular(10.r),
-                                          ),
-                                          child: Text(
-                                            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc vel tincidunt lacinia, nunc nisl aliquam nisl, sed aliquam nisl nisl sit amet nisl. Sed euismod, nunc vel tincidunt lacinia, nunc nisl aliquam nisl, sed aliquam nisl nisl sit amet nisl.',
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 12.sp,
-                                              fontWeight: FontWeight.w400,
+                            child: Obx(
+                              () => ListView.builder(
+                                physics: const BouncingScrollPhysics(),
+                                controller: controller.scrollController,
+                                itemCount: controller.chats.length,
+                                itemBuilder: (context, index) {
+                                  final chat = controller.chats[index];
+
+                                  return Container(
+                                    margin: EdgeInsets.symmetric(
+                                        horizontal: 25.w, vertical: 10.h),
+                                    child: Row(
+                                        textDirection: Get.find<
+                                                    HomeController>()
+                                                .user
+                                                .value
+                                                .isAdmin
+                                            ? (chat.from == "psikolog"
+                                                ? TextDirection.rtl
+                                                : TextDirection.ltr)
+                                            : (chat.userId ==
+                                                    Get.find<HomeController>()
+                                                        .user
+                                                        .value
+                                                        .id
+                                                ? TextDirection.rtl
+                                                : TextDirection.ltr),
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            width: 40.w,
+                                            decoration: BoxDecoration(
+                                              color: AppColors.tertiaryColor,
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: Center(
+                                              child: chat.user?.userImage ==
+                                                      null
+                                                  ? const CircleAvatar(
+                                                      backgroundImage:
+                                                          AssetImage(
+                                                        AppImages.imgUser,
+                                                      ),
+                                                    )
+                                                  : CircleAvatar(
+                                                      backgroundImage:
+                                                          NetworkImage(
+                                                        chat.user!.imageUrl!,
+                                                      ),
+                                                    ),
                                             ),
                                           ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              },
+                                          SizedBox(
+                                            width: 10.w,
+                                          ),
+                                          Expanded(
+                                            child: Container(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 10.w,
+                                                  vertical: 10.h),
+                                              decoration: BoxDecoration(
+                                                color: AppColors.tertiaryColor,
+                                                borderRadius:
+                                                    BorderRadius.circular(10.r),
+                                              ),
+                                              child: Text(
+                                                chat.message ?? "-",
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 12.sp,
+                                                  fontWeight: FontWeight.w400,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ]),
+                                  );
+                                },
+                              ),
                             ),
                           ),
-                          Container(
-                            constraints: BoxConstraints(
-                              minHeight: 20.h,
-                              maxHeight: 40.h,
-                            ),
-                            margin: EdgeInsets.symmetric(
-                                horizontal: 25.w, vertical: 10.h),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Expanded(
-                                  child: TextField(
-                                    minLines: 1,
-                                    decoration: InputDecoration(
-                                      hintText: 'Ketik Pesan ...',
-                                      contentPadding: EdgeInsets.symmetric(
-                                          horizontal: 13.w, vertical: 8.h),
-                                      border: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(8.r),
-                                        borderSide: BorderSide(
-                                          color: Colors.black.withOpacity(0.30),
+                          Visibility(
+                            visible:
+                                !Get.find<HomeController>().user.value.isAdmin,
+                            child: Container(
+                              constraints: BoxConstraints(
+                                minHeight: 20.h,
+                                maxHeight: 40.h,
+                              ),
+                              margin: EdgeInsets.symmetric(
+                                  horizontal: 25.w, vertical: 10.h),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Expanded(
+                                    child: TextField(
+                                      controller: controller.messageController,
+                                      textInputAction: TextInputAction.send,
+                                      onSubmitted: (value) =>
+                                          controller.sendChat().then((value) {
+                                        FocusScope.of(context).unfocus();
+                                      }),
+                                      minLines: 1,
+                                      decoration: InputDecoration(
+                                        hintText: 'Ketik Pesan ...',
+                                        contentPadding: EdgeInsets.symmetric(
+                                            horizontal: 13.w, vertical: 8.h),
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8.r),
+                                          borderSide: BorderSide(
+                                            color:
+                                                Colors.black.withOpacity(0.30),
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                SizedBox(
-                                  width: 12.w,
-                                ),
-                                GestureDetector(
-                                  child: Image.asset(
-                                    AppImages.icSend,
-                                    fit: BoxFit.cover,
+                                  SizedBox(
+                                    width: 12.w,
                                   ),
-                                )
-                              ],
+                                  GestureDetector(
+                                    onTap: () => controller.sendChat(),
+                                    child: Image.asset(
+                                      AppImages.icSend,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                         ],

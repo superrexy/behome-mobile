@@ -2,6 +2,7 @@ import 'package:behome_mobile/app/common/values/app_colors.dart';
 import 'package:behome_mobile/app/common/values/app_constants.dart';
 import 'package:behome_mobile/app/common/values/app_images.dart';
 import 'package:behome_mobile/app/model/response/psikologs_response.dart';
+import 'package:behome_mobile/app/modules/home/controllers/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:behome_mobile/app/routes/app_pages.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -41,7 +42,7 @@ class PsikologCard extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Visibility(
-            visible: isAdmin,
+            visible: Get.find<HomeController>().user.value.isAdmin,
             child: GestureDetector(
               onTap: () => Get.toNamed(Routes.EDITPSIKOLOG, arguments: {
                 "psikologId": data.id,
@@ -93,7 +94,7 @@ class PsikologCard extends StatelessWidget {
           ),
           SizedBox(height: 21.h),
           Visibility(
-            visible: !isAdmin,
+            visible: true,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40),
               child: Column(
@@ -220,7 +221,7 @@ class PsikologCard extends StatelessWidget {
           ),
           SizedBox(height: 40.h),
           Visibility(
-            visible: !isAdmin,
+            visible: Get.find<HomeController>().user.value.isUser,
             child: GestureDetector(
               onTap: () {
                 if (dateController.text.isNotEmpty &&
@@ -228,9 +229,46 @@ class PsikologCard extends StatelessWidget {
                         .where((element) => element.isSelected == true)
                         .where((element) => element.userSelected == true)
                         .isNotEmpty) {
-                  Get.toNamed(Routes.ORDER, arguments: {
-                    "index": index,
-                  });
+                  // Check time now with selected time
+                  final DateTime now = DateTime.now();
+
+                  // Date selected
+                  final DateTime selectedDate =
+                      DateFormat('EEEE, dd MMMM yyyy', 'id_ID')
+                          .parse(dateController.text);
+
+                  // Time selected
+                  final DateTime selectedTime = DateTime(
+                    selectedDate.year,
+                    selectedDate.month,
+                    selectedDate.day,
+                    int.parse(psikologSchedules
+                        .where((element) => element.isSelected == true)
+                        .where((element) => element.userSelected == true)
+                        .first
+                        .time
+                        .split(":")[0]),
+                    int.parse(psikologSchedules
+                        .where((element) => element.isSelected == true)
+                        .where((element) => element.userSelected == true)
+                        .first
+                        .time
+                        .split(":")[1]),
+                  );
+
+                  if (selectedTime.isAfter(now) ||
+                      selectedTime.isAtSameMomentAs(now)) {
+                    Get.toNamed(Routes.ORDER, arguments: {
+                      "index": index,
+                    });
+                  } else {
+                    Get.snackbar(
+                      'Gagal',
+                      'Waktu yang dipilih sudah lewat',
+                      backgroundColor: Colors.red,
+                      colorText: Colors.white,
+                    );
+                  }
                 }
               },
               child: Container(

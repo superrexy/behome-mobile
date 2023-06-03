@@ -143,10 +143,7 @@ class OrderSuccessView extends GetView<OrderController> {
                   const SizedBox(height: 10),
                   GestureDetector(
                     onTap: () => Get.offAllNamed(
-                      Routes.CHAT,
-                      arguments: {
-                        'index': Get.arguments?['index'],
-                      },
+                      Routes.CHATS,
                       predicate: (route) => route.settings.name == Routes.HOME,
                     ),
                     child: Container(

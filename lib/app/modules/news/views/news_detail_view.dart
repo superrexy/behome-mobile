@@ -58,8 +58,8 @@ class NewsDetailView extends GetView<NewsController> {
                       Expanded(
                         child: Obx(
                           () => Visibility(
-                            visible: controller.homeController.user.value.role
-                                .contains("psikolog"),
+                            visible:
+                                controller.homeController.user.value.isPsikolog,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [

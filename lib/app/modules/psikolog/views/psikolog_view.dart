@@ -7,6 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:get/get.dart';
 
+import '../../home/controllers/home_controller.dart';
 import '../controllers/psikolog_controller.dart';
 
 class PsikologView extends GetView<PsikologController> {
@@ -51,7 +52,7 @@ class PsikologView extends GetView<PsikologController> {
                     ),
                   ),
                 ),
-                Expanded(child: const SizedBox())
+                const Expanded(child: SizedBox())
               ],
             ),
             SizedBox(height: 22.h),
@@ -79,10 +80,9 @@ class PsikologView extends GetView<PsikologController> {
             SizedBox(height: 22.h),
             Container(
               constraints: BoxConstraints(
-                maxHeight:
-                    controller.homeController.user.value.role != "psikolog"
-                        ? 800.h
-                        : 350.h,
+                maxHeight: Get.find<HomeController>().user.value.isUser
+                    ? 800.h
+                    : 800.h,
               ),
               child: GetBuilder<PsikologController>(
                 builder: (controller) {
@@ -96,8 +96,8 @@ class PsikologView extends GetView<PsikologController> {
                         dateController: controller.dateController,
                         onTap: (item) =>
                             controller.userSelectSchedule(item, index),
-                        isAdmin: controller.homeController.user.value.role
-                            .contains("psikolog"),
+                        isAdmin:
+                            controller.homeController.user.value.isPsikolog,
                       );
                     },
                     padding: const EdgeInsets.symmetric(horizontal: 20),

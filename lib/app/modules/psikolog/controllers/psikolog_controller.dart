@@ -1,6 +1,7 @@
 import 'package:behome_mobile/app/data/psikologs_provider.dart';
 import 'package:behome_mobile/app/model/response/psikologs_response.dart';
 import 'package:behome_mobile/app/modules/home/controllers/home_controller.dart';
+import 'package:behome_mobile/app/modules/order/controllers/order_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -42,14 +43,11 @@ class PsikologController extends GetxController {
     }
 
     item.userSelected = true;
+    Get.find<OrderController>().scheduleId = item.id;
     psikologs.refresh();
     update();
   }
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
 
   @override
   void onReady() {
@@ -57,8 +55,4 @@ class PsikologController extends GetxController {
     super.onReady();
   }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
 }

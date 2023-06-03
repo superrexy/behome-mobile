@@ -80,7 +80,7 @@ class PsikologsDataResponse {
         "created_at": createdAt!.toIso8601String(),
         "updated_at": updatedAt!.toIso8601String(),
         "psikolog_schedules":
-            List<dynamic>.from(psikologSchedules!.map((x) => x.toJson())),
+            List<dynamic>.from(psikologSchedules.map((x) => x.toJson())),
       };
 }
 

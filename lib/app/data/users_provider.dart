@@ -8,12 +8,12 @@ import 'api_client.dart';
 class UsersProvider {
   final Dio _client = ApiClient.init();
 
-  Future<UsersDataResponse?> profile() async {
+  Future<UsersResponse?> profile() async {
     try {
       final Response response = await _client.get("/users/profile");
 
       if (response.statusCode == 200) {
-        return UsersDataResponse.fromJson(response.data['data']);
+        return UsersResponse.fromJson(response.data['data']);
       }
 
       return null;
@@ -22,7 +22,7 @@ class UsersProvider {
     }
   }
 
-  Future<UsersDataResponse?> updateProfile(UsersRequest request) async {
+  Future<UsersResponse?> updateProfile(UsersRequest request) async {
     try {
       if (request.userImage != null) {
         final fileName = request.userImage!.path.split('/').last;
@@ -41,7 +41,7 @@ class UsersProvider {
             await _client.put("/users/profile", data: formData);
 
         if (response.statusCode == 200) {
-          return UsersDataResponse.fromJson(response.data['data']);
+          return UsersResponse.fromJson(response.data['data']);
         }
 
         return null;
@@ -51,7 +51,7 @@ class UsersProvider {
           await _client.put("/users/profile", data: request.toJson());
 
       if (response.statusCode == 200) {
-        return UsersDataResponse.fromJson(response.data['data']);
+        return UsersResponse.fromJson(response.data['data']);
       }
 
       return null;

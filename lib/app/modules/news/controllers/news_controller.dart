@@ -107,10 +107,8 @@ class NewsController extends GetxController {
       if (response != null) {
         descriptionController.text = response.description;
 
-        if (response.newsImage != null) {
-          isImageFromInternet.value = true;
-          imageUrl = AppConstants.baseURL + response.newsImage;
-        }
+        isImageFromInternet.value = true;
+        imageUrl = AppConstants.baseURL + response.newsImage;
 
         update();
 
@@ -150,18 +148,6 @@ class NewsController extends GetxController {
     }
   }
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
 }

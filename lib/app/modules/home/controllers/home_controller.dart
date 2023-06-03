@@ -11,16 +11,7 @@ class HomeController extends GetxController {
   final NewsProvider newsProvider = NewsProvider();
 
   // OBSERVABLE
-  final user = UsersDataResponse(
-    id: 0,
-    name: '',
-    address: '',
-    phone: '',
-    email: '',
-    role: '',
-    createdAt: DateTime.now(),
-    updatedAt: DateTime.now(),
-  ).obs;
+  final user = const UsersResponse().obs;
   final news = <NewsDataResponse>[].obs;
   final isSort = false.obs;
 
@@ -30,14 +21,9 @@ class HomeController extends GetxController {
       final response = await usersProvider.profile();
 
       if (response != null) {
-        user.update((val) {
-          val?.name = response.name;
-          val?.address = response.address;
-          val?.phone = response.phone;
-          val?.email = response.email;
-          val?.role = response.role;
-          val?.userImage = response.userImage;
-        });
+        user.value = response;
+        print(user);
+        user.refresh();
       }
     } catch (e) {
       print(e);
@@ -65,19 +51,9 @@ class HomeController extends GetxController {
   }
 
   @override
-  void onInit() {
-    super.onInit();
-  }
-
-  @override
   void onReady() {
     getProfile();
     getNews();
     super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
   }
 }

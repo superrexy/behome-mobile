@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 part of 'app_pages.dart';
 // DO NOT EDIT. This is code generated via package:get_cli/get_cli.dart
 
@@ -17,6 +19,7 @@ abstract class Routes {
   static const ORDER = _Paths.ORDER;
   static const ORDER_SUCCESS = _Paths.ORDER_SUCCESS;
   static const CHAT = _Paths.CHAT;
+  static const CHATS = _Paths.CHATS;
 }
 
 abstract class _Paths {
@@ -34,5 +37,6 @@ abstract class _Paths {
   static const NEWS_DETAIL = '/news-detail';
   static const ORDER = '/order';
   static const ORDER_SUCCESS = '/order-success';
-  static const CHAT = '/chat';
+  static const CHAT = '/chat/:orderId';
+  static const CHATS = '/chats';
 }

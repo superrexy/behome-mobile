@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../common/storage/storage.dart';
-import '../../../../common/values/app_constants.dart';
 import '../../../../data/authentication_provider.dart';
 import '../../../../model/request/register_request.dart';
 import '../../../../routes/app_pages.dart';
@@ -48,18 +46,6 @@ class RegisterController extends GetxController {
     }
   }
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
 }

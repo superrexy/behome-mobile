@@ -5,14 +5,22 @@ import 'package:dio/dio.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get/utils.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class ApiClient {
   static Dio init() {
     final dio = Dio();
     dio.options.baseUrl = AppConstants.baseAPIURL;
-    dio.options.connectTimeout = 5000;
-    dio.options.receiveTimeout = 3000;
     dio.interceptors.add(ApiInterceptors());
+
+    dio.interceptors.add(PrettyDioLogger(
+        requestHeader: true,
+        requestBody: true,
+        responseBody: true,
+        responseHeader: true,
+        error: true,
+        compact: true,
+        maxWidth: 90));
     return dio;
   }
 }
@@ -53,11 +61,11 @@ class ApiInterceptors extends Interceptor {
   void onError(DioError err, ErrorInterceptorHandler handler) {
     EasyLoading.dismiss();
 
-    if (err.message.contains('SocketException')) {
+    if (err.message!.contains('SocketException')) {
       Get.snackbar('Error', 'No Internet Connection');
-    } else if (err.message.contains('HttpException')) {
+    } else if (err.message!.contains('HttpException')) {
       Get.snackbar('Error', 'Server Error');
-    } else if (err.message.contains('TimeoutException')) {
+    } else if (err.message!.contains('TimeoutException')) {
       Get.snackbar('Error', 'Connection Timeout');
     }
 
