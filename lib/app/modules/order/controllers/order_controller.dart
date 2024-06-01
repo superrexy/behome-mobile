@@ -48,12 +48,9 @@ class OrderController extends GetxController {
       Get.snackbar(
         'Gagal',
         'Gagal membuat order',
-        backgroundColor: Get.theme.errorColor,
+        backgroundColor: Get.theme.colorScheme.error,
         colorText: Get.theme.colorScheme.onPrimary,
       );
     }
   }
-
-
-
 }
